@@ -1,37 +1,31 @@
-
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
+#include <stdio.h>
 #include "fields.h"
+#include <string.h>
 
 
-int main(int argc, char **argv)
+int main(int argc, char *argv)
 {
-  IS is;
-  int i; 
-  /* Open the file as an inputstruct.  Error check. */
+    IS is;
+    is = new_inputstruct(".kilit");
+    while (get_line(is) >= 0)
+    {
+      //jsondaki süslü parantezleri ayırma
+        if (is->NF > 1)
+        {
+            char *token;
+            char * token2;
+            token = strtok(is->fields[0], ":");
+            token2 = strtok(is->fields[1], ",");
+            //json dan alınan stringlerin başındaki ve sonundaki tırnakları silme işlemi.
+            token++;
+            token2++;
+            token2[strlen(token2) - 1] = 0;  
+            token[strlen(token)-1] = 0;
+            printf(" %s\n", token);
 
-  is = new_inputstruct("./.kilit");
-  if (is == NULL) {
-    perror("./.kilit");
-    exit(1);
-  }
-
-  /* Read each line with get_line().  Print out each word. */
-
-  while(get_line(is) >= 0) {
-      char *ch;
-      ch = strtok(is->text1, ":");
-      while (ch != NULL) {
-         printf("%s\n", ch);
-         ch = strtok(NULL, ":");
-      }
-  }
-
-  /* Free up the memory allocated with new_inputstruct, and
-     close the open file.  This is not necessary in this program, 
-     since we are exiting anyway, but I just want to show how you free it up. */
-
-  jettison_inputstruct(is);
-  return 0;
+        }
+    }
+    jettison_inputstruct(is);
+    return 0;
 }
