@@ -67,7 +67,7 @@ void encripted_decripted(char *tur, char *giris_metin, char *cikis_metin)
             //yoksa
             else
             {
-                sz = write(fd, "******", strlen("******"));
+                sz = write(fd, is2->fields[i], strlen(is2->fields[i]));
                 sz = write(fd, " ", strlen(" "));
             }
         }
