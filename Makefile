@@ -1,13 +1,20 @@
 
-INC="./include"
-LIB="./lib"
-TARGET=main
+LIBFDR="./libfdr"
+TARGET=kripto
 
 all: $(TARGET)
 
+run:
+	make clean 
+	make
+	./${TARGET} -e ./ornek_metin.txt ./encripted
+	./${TARGET} -d ./encripted ./decripted
 
-$(TARGET): ./lib/libfdr.a $(TARGET).c
-	gcc -I$(INC) $(TARGET).c -o $@ -L$(LIB) -lfdr
+$(TARGET): ./libfdr/libfdr.a main.c
+	gcc -I$(LIBFDR) main.c -o $@ -L$(LIBFDR) -lfdr
 
 clean:
 	rm -rf $(TARGET)
+
+cleanall:
+	rm -rf $(TARGET) .kilit encripted decripted *.txt 
