@@ -11,7 +11,7 @@ run:
 	./${TARGET} -d ./encripted ./decripted
 
 $(TARGET): ./libfdr/libfdr.a main.c
-	gcc -I$(LIBFDR) main.c -o $@ -L$(LIBFDR) -lfdr
+	gcc -I ./ main.c -o $@ -L$(LIBFDR) -lfdr
 
 clean:
 	rm -rf $(TARGET)
